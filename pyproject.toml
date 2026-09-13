@@ -1,13 +1,3 @@
-[project]
-name = "materimedia-backend"
-version = "0.1.0"
-description = "TTS Backend"
-readme = "README.txt"
-requires-python = ">=3.10"
-dependencies = [
-    "google-genai",
-    "edge-tts"
-]
-
+Ini, TOML
 [tool.vercel]
-entrypoint = "api/generate.py"
+entrypoint = "api.generate:handler"
