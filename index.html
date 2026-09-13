@@ -57,6 +57,29 @@
             margin-bottom: 8px;
             font-size: 0.9rem;
         }
+        .character-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .character-row select {
+            flex: 1;
+        }
+        .preview-btn {
+            background-color: #e50914;
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: auto;
+            white-space: nowrap;
+        }
+        .preview-btn:hover {
+            background-color: #b80710;
+        }
         select, textarea, input[type="range"], input[type="text"] {
             width: 100%;
             padding: 12px;
@@ -80,7 +103,7 @@
             text-align: right;
             font-variant-numeric: tabular-nums;
         }
-        button {
+        button.action-btn {
             width: 100%;
             background-color: var(--text-color);
             color: white;
@@ -92,10 +115,10 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        button:hover {
+        button.action-btn:hover {
             background-color: #333;
         }
-        button:disabled {
+        button.action-btn:disabled {
             background-color: #ccc;
             cursor: not-allowed;
         }
@@ -106,6 +129,20 @@
         audio {
             width: 100%;
             margin-top: 10px;
+        }
+        .download-direct-btn {
+            display: inline-block;
+            margin-top: 15px;
+            background-color: #10b981;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            font-weight: 600;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        .download-direct-btn:hover {
+            background-color: #059669;
         }
         .status-msg {
             margin-top: 10px;
@@ -129,18 +166,21 @@
 
             <div class="form-group">
                 <label for="characterSelect">Karakter Suara</label>
-                <select id="characterSelect">
-                    <option value="Nain">Nain (Pria - Wibawa & Berwibawa)</option>
-                    <option value="Dzul">Dzul (Pria - Tegas)</option>
-                    <option value="Rayyan">Rayyan (Pria - Energik)</option>
-                    <option value="Amar">Amar (Pria - Berat/Deep)</option>
-                    <option value="Ramy">Ramy (Pria - Natural)</option>
-                    <option value="Mawar">Mawar (Wanita - Profesional)</option>
-                    <option value="Khilwa">Khilwa (Wanita - Ceria/High)</option>
-                    <option value="Tsurayya">Tsurayya (Wanita - Tenang)</option>
-                    <option value="Putri">Putri (Wanita - Informatif)</option>
-                    <option value="Naina">Naina (Wanita - Soft)</option>
-                </select>
+                <div class="character-row">
+                    <select id="characterSelect">
+                        <option value="Nain">Nain (Pria - Wibawa & Berwibawa)</option>
+                        <option value="Dzul">Dzul (Pria - Tegas)</option>
+                        <option value="Rayyan">Rayyan (Pria - Energik)</option>
+                        <option value="Amar">Amar (Pria - Berat/Deep)</option>
+                        <option value="Ramy">Ramy (Pria - Natural)</option>
+                        <option value="Mawar">Mawar (Wanita - Profesional)</option>
+                        <option value="Khilwa">Khilwa (Wanita - Ceria/High)</option>
+                        <option value="Tsurayya">Tsurayya (Wanita - Tenang)</option>
+                        <option value="Putri">Putri (Wanita - Informatif)</option>
+                        <option value="Naina">Naina (Wanita - Soft)</option>
+                    </select>
+                    <button type="button" class="preview-btn" onclick="previewCharacter()">Pratinjau Suara</button>
+                </div>
             </div>
 
             <div class="form-group">
@@ -189,22 +229,27 @@
             </div>
 
             <div class="form-group">
-                <label for="apiKeyInput">Gemini API Key (Opsional, jika ingin perbaikan naskah AI):</label>
+                <label for="apiKeyInput">Gemini API Key (Opsional):</label>
                 <input type="text" id="apiKeyInput" placeholder="Kosongkan jika pakai env server">
             </div>
 
-            <button id="generateBtn" onclick="generateVoice()">Generasikan Voice Over</button>
+            <button id="generateBtn" class="action-btn" onclick="generateVoice()">Generasikan Voice Over</button>
 
             <div class="audio-result">
                 <h3>HASIL VOICE OVER STUDIO</h3>
                 <div id="statusMsg" class="status-msg">Siap generate...</div>
                 <audio id="audioPlayer" controls style="display:none;"></audio>
+                <div>
+                    <a id="downloadBtn" class="download-direct-btn" style="display:none;" download="audio.mp3">Download Hasil Voice Over</a>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Hidden audio player for preview -->
+    <audio id="previewAudioPlayer" style="display:none;"></audio>
+
     <script>
-        // Update label slider nilai real-time
         function setupSlider(sliderId, valId) {
             const slider = document.getElementById(sliderId);
             const val = document.getElementById(valId);
@@ -216,10 +261,39 @@
         setupSlider('pitchSlider', 'pitchVal');
         setupSlider('volumeSlider', 'volumeVal');
 
+        async function previewCharacter() {
+            const charName = document.getElementById('characterSelect').value;
+            const previewText = `halo aku ${charName} dari materi media ini suaraku`;
+            const previewPlayer = document.getElementById('previewAudioPlayer');
+            
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: previewText,
+                        character: charName,
+                        emotion: 'Profesional',
+                        speed_mod: 0,
+                        pitch_mod: 0,
+                        volume_mod: 0,
+                        gemini_api_key: ''
+                    })
+                });
+                if (!response.ok) throw new Error('Gagal pratinjau');
+                const blob = await response.blob();
+                previewPlayer.src = URL.createObjectURL(blob);
+                previewPlayer.play();
+            } catch (err) {
+                alert('Gagal memutar pratinjau suara karakter.');
+            }
+        }
+
         async function generateVoice() {
             const btn = document.getElementById('generateBtn');
             const statusMsg = document.getElementById('statusMsg');
             const audioPlayer = document.getElementById('audioPlayer');
+            const downloadBtn = document.getElementById('downloadBtn');
 
             const text = document.getElementById('textInput').value.trim();
             if (!text) {
@@ -227,15 +301,19 @@
                 return;
             }
 
+            const charName = document.getElementById('characterSelect').value;
+            const customFileName = `${charName.toLowerCase()}_vo_materimedia.mp3`;
+
             btn.disabled = true;
             btn.textContent = 'Memproses...';
             statusMsg.textContent = 'Menghubungkan ke server voice over...';
             audioPlayer.style.display = 'none';
+            downloadBtn.style.display = 'none';
 
             try {
                 const payload = {
                     text: text,
-                    character: document.getElementById('characterSelect').value,
+                    character: charName,
                     emotion: document.getElementById('emotionSelect').value,
                     speed_mod: parseInt(document.getElementById('speedSlider').value),
                     pitch_mod: parseInt(document.getElementById('pitchSlider').value),
@@ -259,7 +337,13 @@
                 audioPlayer.src = audioUrl;
                 audioPlayer.style.display = 'block';
                 audioPlayer.play();
-                statusMsg.textContent = 'Selesai! Audio berhasil diputar.';
+
+                downloadBtn.href = audioUrl;
+                downloadBtn.download = customFileName;
+                downloadBtn.textContent = `Download ${customFileName}`;
+                downloadBtn.style.display = 'inline-block';
+
+                statusMsg.textContent = 'Selesai! Audio berhasil digenerate.';
             } catch (err) {
                 console.error(err);
                 statusMsg.textContent = 'Error: Gagal generate audio.';
