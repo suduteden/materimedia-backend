@@ -396,6 +396,7 @@
 <body>
 
     <div class="studio-shell">
+        <!-- COVER / HERO SECTION -->
         <header class="editorial-cover">
             <div class="editorial-topbar">
                 <img src="media-logo.png" alt="materimedia." class="logo-brand" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -410,7 +411,7 @@
                 </div>
 
                 <div class="editorial-visual">
-                    <img src="megaphone-asset.png" alt="Megaphone" class="megaphone-img">
+                    <img src="megaphone-asset.png" alt="Megaphone" class="megaphone-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1589903308904-1010c2294adc?auto=format&fit=crop&w=400&q=80';">
                 </div>
             </div>
 
@@ -419,6 +420,7 @@
             </div>
         </header>
 
+        <!-- STUDIO CONTROLS -->
         <main class="workspace-panel">
             <div class="workspace-title">
                 <h2>Buat Suaramu Disini</h2>
@@ -443,3 +445,178 @@
                         </select>
                         <button type="button" class="btn-preview" onclick="previewCharacter()">Pratinjau</button>
                     </div>
+                </div>
+
+                <div class="field-group span-full">
+                    <label for="emotionSelect">Gaya Bicara & Emosi</label>
+                    <select id="emotionSelect">
+                        <option value="Profesional">Profesional</option>
+                        <option value="Bersemangat">Bersemangat</option>
+                        <option value="Ceria">Ceria</option>
+                        <option value="Sedih">Sedih</option>
+                        <option value="Marah">Marah</option>
+                        <option value="Informatif">Informatif</option>
+                        <option value="Berbisik">Berbisik</option>
+                        <option value="Tenang">Tenang</option>
+                        <option value="Dramatis">Dramatis</option>
+                        <option value="Santai">Santai</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label>Kecepatan Bicara (%)</label>
+                    <div class="slider-box">
+                        <input type="range" id="speedSlider" min="-50" max="50" value="0">
+                        <span class="slider-readout" id="speedVal">0%</span>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>Nada Vokal (Hz)</label>
+                    <div class="slider-box">
+                        <input type="range" id="pitchSlider" min="-30" max="30" value="0">
+                        <span class="slider-readout" id="pitchVal">0 Hz</span>
+                    </div>
+                </div>
+
+                <div class="field-group span-full">
+                    <label>Keras Suara (%)</label>
+                    <div class="slider-box">
+                        <input type="range" id="volumeSlider" min="-30" max="30" value="0">
+                        <span class="slider-readout" id="volumeVal">0%</span>
+                    </div>
+                </div>
+
+                <div class="field-group span-full">
+                    <label for="textInput">Teks untuk Diucapkan</label>
+                    <textarea id="textInput" placeholder="Halo semuanya yg ada disini apa kabar?"></textarea>
+                </div>
+            </div>
+
+            <div class="workspace-action">
+                <button id="generateBtn" class="btn-generate" onclick="generateVoice()">Generasikan Voice Over</button>
+
+                <div id="outputCard" class="output-card">
+                    <div class="output-header">
+                        <span>Hasil Voice Over <span class="text-accent">Studio</span></span>
+                        <span id="statusBadge" class="status-badge">Siap</span>
+                    </div>
+                    <audio id="audioPlayer" controls></audio>
+                    <a id="downloadBtn" class="btn-download-direct">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download File
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Hidden audio element for preview -->
+    <audio id="previewAudioPlayer" style="display:none;"></audio>
+
+    <script>
+        function bindSlider(sliderId, valId, suffix) {
+            const slider = document.getElementById(sliderId);
+            const val = document.getElementById(valId);
+            slider.addEventListener('input', () => {
+                const prefix = slider.value > 0 ? '+' : '';
+                val.textContent = `${prefix}${slider.value}${suffix}`;
+            });
+        }
+        bindSlider('speedSlider', 'speedVal', '%');
+        bindSlider('pitchSlider', 'pitchVal', ' Hz');
+        bindSlider('volumeSlider', 'volumeVal', '%');
+
+        async function previewCharacter() {
+            const charName = document.getElementById('characterSelect').value;
+            const previewText = `halo aku ${charName} dari materi media ini suaraku`;
+            const previewPlayer = document.getElementById('previewAudioPlayer');
+            
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: previewText,
+                        character: charName,
+                        emotion: 'Profesional',
+                        speed_mod: 0,
+                        pitch_mod: 0,
+                        volume_mod: 0,
+                        gemini_api_key: ''
+                    })
+                });
+                if (!response.ok) throw new Error('Preview gagal');
+                const blob = await response.blob();
+                previewPlayer.src = URL.createObjectURL(blob);
+                previewPlayer.play();
+            } catch (err) {
+                alert('Gagal memutar pratinjau suara.');
+            }
+        }
+
+        async function generateVoice() {
+            const btn = document.getElementById('generateBtn');
+            const outputCard = document.getElementById('outputCard');
+            const statusBadge = document.getElementById('statusBadge');
+            const audioPlayer = document.getElementById('audioPlayer');
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            const text = document.getElementById('textInput').value.trim();
+            if (!text) {
+                alert('Mohon isi teks terlebih dahulu!');
+                return;
+            }
+
+            const charName = document.getElementById('characterSelect').value;
+            const customFileName = `${charName.toLowerCase()}_vo_materimedia.mp3`;
+
+            btn.disabled = true;
+            btn.textContent = 'Memproses...';
+            outputCard.classList.remove('active');
+
+            try {
+                const payload = {
+                    text: text,
+                    character: charName,
+                    emotion: document.getElementById('emotionSelect').value,
+                    speed_mod: parseInt(document.getElementById('speedSlider').value),
+                    pitch_mod: parseInt(document.getElementById('pitchSlider').value),
+                    volume_mod: parseInt(document.getElementById('volumeSlider').value),
+                    gemini_api_key: ''
+                };
+
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error(`Server error: ${response.status}`);
+
+                const blob = await response.blob();
+                const audioUrl = URL.createObjectURL(blob);
+                
+                audioPlayer.src = audioUrl;
+                outputCard.classList.add('active');
+                audioPlayer.play();
+
+                downloadBtn.href = audioUrl;
+                downloadBtn.download = customFileName;
+                downloadBtn.innerHTML = `
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download ${customFileName}
+                `;
+
+                statusBadge.textContent = 'Selesai';
+            } catch (err) {
+                console.error(err);
+                alert('Gagal generate audio.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Generasikan Voice Over';
+            }
+        }
+    </script>
+</body>
+</html>
