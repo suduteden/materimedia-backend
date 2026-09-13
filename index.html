@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice Over materimedia.</title>
+    <title>Voice Over materimedia. — Client Portal</title>
     <style>
         :root {
             --bg-canvas: #fafafa;
@@ -33,6 +33,46 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Login Screen */
+        .login-wrapper {
+            width: 100%;
+            max-width: 420px;
+            margin-top: 60px;
+        }
+
+        .login-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 40px 32px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .login-header {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .login-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .login-header p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .text-accent { color: var(--accent); }
+
+        .hidden { display: none !important; }
+
         .studio-shell {
             width: 100%;
             max-width: 960px;
@@ -41,7 +81,7 @@
             gap: 28px;
         }
 
-        /* --- ELEGAN HERO COVER (ALA ELEVENLABS / EDITORIAL) --- */
+        /* --- ELEGAN HERO COVER --- */
         .editorial-cover {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -50,7 +90,7 @@
             display: flex;
             flex-direction: column;
             gap: 24px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 10.5px 21px rgba(0,0,0,0.015);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
             position: relative;
         }
 
@@ -60,19 +100,8 @@
             justify-content: space-between;
         }
 
-        .logo-brand {
-            height: 24px;
-            width: auto;
-            display: block;
-        }
-
-        .year-badge {
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-        }
+        .logo-brand { height: 24px; width: auto; display: block; }
+        .year-badge { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; color: var(--text-secondary); text-transform: uppercase; }
 
         .editorial-main {
             display: flex;
@@ -81,57 +110,17 @@
         }
 
         @media (min-width: 768px) {
-            .editorial-cover {
-                padding: 44px 48px;
-            }
-            .editorial-main {
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-            }
+            .editorial-cover { padding: 44px 48px; }
+            .editorial-main { flex-direction: row; align-items: center; justify-content: space-between; }
         }
 
-        .editorial-headline {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-width: 520px;
-        }
+        .editorial-headline { display: flex; flex-direction: column; gap: 12px; max-width: 520px; }
+        .editorial-headline h1 { font-size: clamp(2.25rem, 4vw, 3.25rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+        .editorial-headline p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--accent); font-weight: 500; }
 
-        .editorial-headline h1 {
-            font-size: clamp(2.25rem, 4vw, 3.25rem);
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            color: var(--text-primary);
-        }
-
-        .editorial-headline p {
-            font-size: clamp(0.95rem, 1.5vw, 1.05rem);
-            color: var(--accent);
-            font-weight: 500;
-        }
-
-        .editorial-visual {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 140px;
-        }
-
-        .megaphone-img {
-            width: 160px;
-            height: auto;
-            object-fit: contain;
-            display: block;
-            filter: drop-shadow(0 12px 24px rgba(0,0,0,0.08));
-        }
-
-        @media (min-width: 768px) {
-            .megaphone-img {
-                width: 200px;
-            }
-        }
+        .editorial-visual { display: flex; justify-content: center; align-items: center; min-height: 140px; }
+        .megaphone-img { width: 160px; height: auto; object-fit: contain; display: block; filter: drop-shadow(0 12px 24px rgba(0,0,0,0.08)); }
+        @media (min-width: 768px) { .megaphone-img { width: 200px; } }
 
         .editorial-footer {
             border-top: 1px solid var(--border);
@@ -143,15 +132,7 @@
             font-size: 0.8rem;
             color: var(--text-secondary);
         }
-
-        .editorial-footer strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .text-accent {
-            color: var(--accent);
-        }
+        .editorial-footer strong { color: var(--text-primary); font-weight: 600; }
 
         /* --- STUDIO WORKSPACE CARD --- */
         .workspace-panel {
@@ -159,70 +140,26 @@
             border: 1px solid var(--border);
             border-radius: var(--radius-card);
             padding: 32px 28px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 10.5px 21px rgba(0,0,0,0.015);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
             display: flex;
             flex-direction: column;
             gap: 28px;
         }
+        @media (min-width: 768px) { .workspace-panel { padding: 40px 48px; } }
 
-        @media (min-width: 768px) {
-            .workspace-panel {
-                padding: 40px 48px;
-            }
-        }
+        .workspace-title h2 { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
+        .workspace-title p { font-size: 0.9rem; color: var(--accent); font-weight: 500; }
 
-        .workspace-title h2 {
-            font-size: 1.35rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 4px;
-        }
+        .control-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+        @media (min-width: 768px) { .control-grid { grid-template-columns: repeat(2, 1fr); } .span-full { grid-column: 1 / -1; } }
 
-        .workspace-title p {
-            font-size: 0.9rem;
-            color: var(--accent);
-            font-weight: 500;
-        }
+        .field-group { display: flex; flex-direction: column; gap: 8px; }
+        .field-group label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-secondary); }
 
-        .control-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
-        }
+        .select-row { display: flex; gap: 10px; }
+        .select-row select { flex: 1; }
 
-        @media (min-width: 768px) {
-            .control-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .span-full {
-                grid-column: 1 / -1;
-            }
-        }
-
-        .field-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .field-group label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-        }
-
-        .select-row {
-            display: flex;
-            gap: 10px;
-        }
-
-        .select-row select {
-            flex: 1;
-        }
-
-        select, input[type="text"], textarea {
+        select, input[type="text"], input[type="password"], textarea {
             width: 100%;
             padding: 12px 14px;
             background: #fafafa;
@@ -233,18 +170,14 @@
             transition: all 0.2s ease;
         }
 
-        select:focus, input[type="text"]:focus, textarea:focus {
+        select:focus, input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
             outline: none;
             background: #fff;
             border-color: var(--text-primary);
             box-shadow: 0 0 0 3px rgba(9,9,11,0.05);
         }
 
-        textarea {
-            resize: vertical;
-            height: 120px;
-            line-height: 1.6;
-        }
+        textarea { resize: vertical; height: 120px; line-height: 1.6; }
 
         .btn-preview {
             background: var(--text-primary);
@@ -258,43 +191,15 @@
             transition: opacity 0.2s;
             white-space: nowrap;
         }
+        .btn-preview:hover { opacity: 0.85; }
 
-        .btn-preview:hover {
-            opacity: 0.85;
-        }
+        .slider-box { display: flex; align-items: center; gap: 16px; padding: 8px 0; }
+        .slider-box input[type="range"] { flex: 1; accent-color: var(--text-primary); cursor: pointer; }
+        .slider-readout { min-width: 52px; text-align: right; font-variant-numeric: tabular-nums; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
 
-        .slider-box {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 8px 0;
-        }
+        .workspace-action { display: flex; flex-direction: column; gap: 20px; padding-top: 12px; border-top: 1px solid var(--border); }
 
-        .slider-box input[type="range"] {
-            flex: 1;
-            accent-color: var(--text-primary);
-            cursor: pointer;
-        }
-
-        .slider-readout {
-            min-width: 52px;
-            text-align: right;
-            font-variant-numeric: tabular-nums;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-        }
-
-        /* --- ACTION & OUTPUT SECTION --- */
-        .workspace-action {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
-        }
-
-        .btn-generate {
+        .btn-generate, .btn-login {
             width: 100%;
             background: var(--accent);
             color: #fff;
@@ -304,21 +209,10 @@
             font-weight: 600;
             border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: background-color 0.2s, transform 0.05s;
+            transition: background-color 0.2s;
         }
-
-        .btn-generate:hover {
-            background: #cc0811;
-        }
-
-        .btn-generate:active {
-            transform: scale(0.99);
-        }
-
-        .btn-generate:disabled {
-            background: #a1a1aa;
-            cursor: not-allowed;
-        }
+        .btn-generate:hover, .btn-login:hover { background: #cc0811; }
+        .btn-generate:disabled { background: #a1a1aa; cursor: not-allowed; }
 
         .output-card {
             background: #fafafa;
@@ -329,35 +223,13 @@
             flex-direction: column;
             gap: 14px;
         }
+        .output-card.active { display: flex; }
 
-        .output-card.active {
-            display: flex;
-        }
+        .output-header { display: flex; justify-content: space-between; align-items: center; }
+        .output-header span { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); }
+        .status-badge { font-size: 0.75rem; color: #059669; font-weight: 600; }
 
-        .output-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .output-header span {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-secondary);
-        }
-
-        .status-badge {
-            font-size: 0.75rem;
-            color: #059669;
-            font-weight: 600;
-        }
-
-        audio {
-            width: 100%;
-            height: 38px;
-        }
+        audio { width: 100%; height: 38px; }
 
         .btn-download-direct {
             display: inline-flex;
@@ -374,34 +246,47 @@
             transition: opacity 0.2s;
             width: fit-content;
         }
+        .btn-download-direct:hover { opacity: 0.85; }
 
-        .btn-download-direct:hover {
-            opacity: 0.85;
-        }
+        .error-msg { font-size: 0.85rem; color: var(--accent); text-align: center; }
 
-        /* Responsive Mobile Tweak */
         @media (max-width: 640px) {
-            body {
-                padding: 16px 12px;
-            }
-            .editorial-cover, .workspace-panel {
-                padding: 24px 20px;
-            }
-            .editorial-headline h1 {
-                font-size: 1.85rem;
-            }
+            body { padding: 16px 12px; }
+            .editorial-cover, .workspace-panel, .login-card { padding: 24px 20px; }
+            .editorial-headline h1 { font-size: 1.85rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="studio-shell">
-        <!-- COVER / HERO SECTION -->
+    <!-- HALAMAN LOGIN ID/PW -->
+    <div id="loginSection" class="login-wrapper">
+        <div class="login-card">
+            <div class="login-header">
+                <span class="logo-fallback" style="font-weight:700; font-size:1.25rem; letter-spacing:-0.03em;">materimedia<span class="text-accent">.</span></span>
+                <h1>Client Access</h1>
+                <p>Masukan ID & Password Akses Studio</p>
+            </div>
+            <div class="field-group">
+                <label>Client ID</label>
+                <input type="text" id="usernameInput" placeholder="MateriVO">
+            </div>
+            <div class="field-group">
+                <label>Password</label>
+                <input type="password" id="passwordInput" placeholder="••••••••••••">
+            </div>
+            <div id="loginError" class="error-msg hidden">ID atau Password salah!</div>
+            <button class="btn-login" onclick="handleLogin()">Masuk Studio</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN STUDIO VOICE OVER (TERPROTEKSI) -->
+    <div id="studioSection" class="studio-shell hidden">
         <header class="editorial-cover">
             <div class="editorial-topbar">
                 <img src="media-logo.png" alt="materimedia." class="logo-brand" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                 <span class="logo-fallback" style="display:none; font-weight:700; font-size:1.1rem; letter-spacing:-0.03em;">materimedia<span class="text-accent">.</span></span>
-                <span class="year-badge">2026 // STUDIO</span>
+                <span class="year-badge">2026 // STUDIO CLIENT</span>
             </div>
 
             <div class="editorial-main">
@@ -411,16 +296,16 @@
                 </div>
 
                 <div class="editorial-visual">
-                    <img src="megaphone-asset.png" alt="Megaphone" class="megaphone-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1589903308904-1010c2294adc?auto=format&fit=crop&w=400&q=80';">
+                    <img src="megaphone-asset.png" alt="Megaphone" class="megaphone-img">
                 </div>
             </div>
 
             <div class="editorial-footer">
                 <div><span class="text-accent" style="font-weight:700;">PROJECT:</span> <strong>Voice Over by Materi Media</strong></div>
+                <div style="margin-left:auto;"><a href="#" onclick="handleLogout()" style="color:var(--text-secondary); font-size:0.75rem; text-decoration:none;">Keluar / Logout</a></div>
             </div>
         </header>
 
-        <!-- STUDIO CONTROLS -->
         <main class="workspace-panel">
             <div class="workspace-title">
                 <h2>Buat Suaramu Disini</h2>
@@ -511,10 +396,50 @@
         </main>
     </div>
 
-    <!-- Hidden audio element for preview -->
     <audio id="previewAudioPlayer" style="display:none;"></audio>
 
     <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const activeSession = sessionStorage.getItem('materimedia_auth');
+            if (activeSession === 'true') {
+                showStudio();
+            }
+        });
+
+        async function handleLogin() {
+            const user = document.getElementById('usernameInput').value.trim();
+            const pass = document.getElementById('passwordInput').value.trim();
+            const errorBox = document.getElementById('loginError');
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+
+                if (response.ok) {
+                    sessionStorage.setItem('materimedia_auth', 'true');
+                    showStudio();
+                } else {
+                    errorBox.classList.remove('hidden');
+                }
+            } catch (err) {
+                errorBox.textContent = 'Gagal terhubung ke server auth.';
+                errorBox.classList.remove('hidden');
+            }
+        }
+
+        function showStudio() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('studioSection').classList.remove('hidden');
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('materimedia_auth');
+            location.reload();
+        }
+
         function bindSlider(sliderId, valId, suffix) {
             const slider = document.getElementById(sliderId);
             const val = document.getElementById(valId);
