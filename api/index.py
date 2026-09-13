@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import Response
+from fastapi.responses import Response, HTMLResponse
 import asyncio
 import os
 import re
@@ -40,6 +40,15 @@ PHONETIC_DICTIONARY = {
     r'\bWhatsApp\b': 'Watsap', r'\bWA\b': 'We A',
     r'\bZoom\b': 'Zum', r'\bMeta\b': 'Meta', r'\bPlus\b': 'Plas'
 }
+
+@app.get("/", response_class=HTMLResponse)
+async def serve_frontend():
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    html_path = os.path.join(root_dir, "index.html")
+    if os.path.exists(html_path):
+        with open(html_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return "<h1>index.html not found</h1>"
 
 @app.api_route("/api/generate", methods=["POST", "OPTIONS"])
 async def generate_audio(request: Request):
