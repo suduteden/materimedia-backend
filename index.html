@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Voice Over Materimedia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: #F7F6F3; 
+            font-family: 'Inter', sans-serif; 
+            color: #111111; 
+            overflow-x: hidden; 
+            width: 100%;
+        }
+
+        .hero-section {
+            width: 100vw;
+            max-width: 100%;
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px 8%;
+            background-color: #F7F6F3;
+            position: relative;
+        }
+
+        .meta-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #E52E2E;
+            z-index: 2;
+        }
+
+        .meta-text span { color: #111111; }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            margin: 20px 0;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .hero-left {
+            max-width: 650px;
+            width: 100%;
+        }
+
+        .hero-title-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .hero-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 4.8rem;
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            color: #111111;
+            margin-bottom: 20px;
+        }
+
+        .dot-red { color: #E52E2E; }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #E52E2E;
+            font-weight: 500;
+            margin-bottom: 36px;
+            line-height: 1.4;
+        }
+
+        .scroll-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background-color: #111111;
+            color: #FFFFFF;
+            padding: 18px 36px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+
+        .scroll-btn:hover {
+            background-color: #E52E2E;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(229, 46, 46, 0.25);
+        }
+
+        .hero-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .megaphone-box {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            transition: transform 0.4s ease;
+            cursor: pointer;
+        }
+
+        .megaphone-box:hover {
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        .megaphone-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 20px 16px;
+                min-height: auto;
+                justify-content: flex-start;
+            }
+
+            .meta-text {
+                font-size: 0.7rem;
+                letter-spacing: 0.08em;
+                margin-bottom: 12px;
+            }
+
+            .hero-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                margin: 10px 0;
+            }
+
+            .hero-left {
+                width: 100%;
+            }
+
+            .hero-title-wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+            .hero-title {
+                font-size: 2rem !important;
+                line-height: 1.1 !important;
+                margin-bottom: 0 !important;
+                flex: 1;
+            }
+
+            .hero-right {
+                display: none;
+            }
+
+            .megaphone-mobile-inline {
+                display: block !important;
+                width: 65px !important;
+                height: auto;
+                flex-shrink: 0;
+            }
+
+            .hero-subtitle {
+                font-size: 0.88rem !important;
+                margin-bottom: 20px !important;
+                line-height: 1.35;
+            }
+
+            .scroll-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 13px 20px;
+                font-size: 0.78rem;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .megaphone-mobile-inline {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero-section">
+        <div class="meta-text">
+            <div>YEAR <span>2026</span></div>
+            <div>PRESENTER <span>MATERIMEDIA.</span></div>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-left">
+                <div class="hero-title-wrapper">
+                    <h1 class="hero-title">Voice Over<br>materimedia<span class="dot-red">.</span></h1>
+                    
+                    <div class="megaphone-mobile-inline">
+                        <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M120 210C120 180 145 155 175 155H210L350 70V430L210 345H175C145 345 120 320 120 290V210Z" fill="#F7F6F3" stroke="#111111" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M210 345L230 430C232 438 240 445 249 445H270C281 445 290 435 288 424L270 345" stroke="#111111" stroke-width="14" stroke-linecap="round"/>
+                            <path d="M390 180C410 200 420 225 420 250C420 275 410 300 390 320" stroke="#E52E2E" stroke-width="16" stroke-linecap="round"/>
+                            <path d="M430 140C460 170 475 210 475 250C475 290 460 330 430 360" stroke="#E52E2E" stroke-width="16" stroke-linecap="round"/>
+                            <polygon points="350,110 350,390 375,370 375,130" fill="#E52E2E" />
+                        </svg>
+                    </div>
+                </div>
+
+                <p class="hero-subtitle">Ubah Teks Menjadi Suara Berkualitas Studio dalam Hitungan Detik</p>
+                <a href="#studio-app" class="scroll-btn">Coba Voice Over Studio ↓</a>
+            </div>
+
+            <div class="hero-right">
+                <div class="megaphone-box">
+                    <svg class="megaphone-img" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M120 210C120 180 145 155 175 155H210L350 70V430L210 345H175C145 345 120 320 120 290V210Z" fill="#F7F6F3" stroke="#111111" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M210 345L230 430C232 438 240 445 249 445H270C281 445 290 435 288 424L270 345" stroke="#111111" stroke-width="12" stroke-linecap="round"/>
+                        <path d="M390 180C410 200 420 225 420 250C420 275 410 300 390 320" stroke="#E52E2E" stroke-width="14" stroke-linecap="round"/>
+                        <path d="M430 140C460 170 475 210 475 250C475 290 460 330 430 360" stroke="#E52E2E" stroke-width="14" stroke-linecap="round"/>
+                        <polygon points="350,110 350,390 375,370 375,130" fill="#E52E2E" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="meta-text">
+            <div>PROJECT <span>VOICE OVER BY MATERI MEDIA</span></div>
+        </div>
+    </section>
+
+    <!-- STUDIO INTERACTIVE SECTION -->
+    <section id="studio-app" style="padding: 60px 8%; background-color: #FFFFFF; border-top: 1px solid #E5E2D9;">
+        <div style="max-width: 700px; margin: 0 auto; background: #FAFAFA; border: 1px solid #E5E2D9; border-radius: 12px; padding: 40px;">
+            <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.8rem; margin-bottom: 24px; color: #111111;">Interactive Studio Console</h3>
+            
+            <div style="margin-bottom: 16px;">
+                <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:6px;">PILIH KARAKTER</label>
+                <select id="charSelect" style="width:100%; padding:12px; border-radius:6px; border:1px solid #CCC;">
+                    <option value="Nain">Nain (Pria - Wibawa & Berat)</option>
+                    <option value="Dzul">Dzul (Pria - Hangat & Empatis)</option>
+                    <option value="Rayyan">Rayyan (Pria - Muda & Enerjik)</option>
+                    <option value="Amar">Amar (Pria - Deep & Narator Film)</option>
+                    <option value="Ramy">Ramy (Pria - Santai & Kasual)</option>
+                    <option value="Mawar">Mawar (Wanita - Elegan & Formal)</option>
+                    <option value="Khilwa">Khilwa (Wanita - Ceria & Enerjik)</option>
+                    <option value="Tsurayya">Tsurayya (Wanita - Lembut & Storytelling)</option>
+                    <option value="Putri">Putri (Wanita - Lincah & Informatif)</option>
+                    <option value="Naina">Naina (Wanita - Dramatis & Deep)</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:6px;">PILIH GAYA / EMOSI</label>
+                <select id="emoSelect" style="width:100%; padding:12px; border-radius:6px; border:1px solid #CCC;">
+                    <option value="Profesional">Profesional</option>
+                    <option value="Bersemangat">Bersemangat</option>
+                    <option value="Ceria">Ceria</option>
+                    <option value="Sedih">Sedih</option>
+                    <option value="Marah">Marah</option>
+                    <option value="Informatif">Informatif</option>
+                    <option value="Berbisik">Berbisik</option>
+                    <option value="Tenang">Tenang</option>
+                    <option value="Dramatis">Dramatis</option>
+                    <option value="Santai">Santai</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:6px;">GEMINI API KEY (OPSIONAL)</label>
+                <input type="password" id="apiKeyInput" placeholder="AIzaSy... (kosongkan jika pakai env server)" style="width:100%; padding:12px; border-radius:6px; border:1px solid #CCC;" />
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:6px;">NASKAH TEKS</label>
+                <textarea id="textInput" rows="4" placeholder="Ketik naskah di sini..." style="width:100%; padding:12px; border-radius:6px; border:1px solid #CCC;"></textarea>
+            </div>
+
+            <button onclick="handleGenerate()" id="genBtn" style="background-color: #E52E2E; color: white; border: none; padding: 14px 28px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase;">Generate Voice Over</button>
+
+            <div id="resultBox" style="margin-top: 24px; display: none;">
+                <audio id="audioPlayer" controls style="width: 100%;"></audio>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    async function handleGenerate() {
+        const text = document.getElementById('textInput').value;
+        const character = document.getElementById('charSelect').value;
+        const emotion = document.getElementById('emoSelect').value;
+        const gemini_api_key = document.getElementById('apiKeyInput').value;
+        const btn = document.getElementById('genBtn');
+
+        if (!text.trim()) {
+            alert('Mohon masukkan teks naskah!');
+            return;
+        }
+
+        btn.innerText = 'Generating...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch('/api/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text, character, emotion, gemini_api_key })
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const audioUrl = URL.createObjectURL(blob);
+                const player = document.getElementById('audioPlayer');
+                player.src = audioUrl;
+                document.getElementById('resultBox').style.display = 'block';
+                player.play();
+            } else {
+                alert('Gagal generate audio dari server.');
+            }
+        } catch (e) {
+            alert('Terjadi kesalahan jaringan: ' + e.message);
+        } finally {
+            btn.innerText = 'Generate Voice Over';
+            btn.disabled = false;
+        }
+    }
+    </script>
+</body>
+</html>
