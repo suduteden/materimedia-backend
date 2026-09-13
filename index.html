@@ -6,13 +6,13 @@
     <title>Voice Over materimedia.</title>
     <style>
         :root {
-            --bg-color: #f4f4f5;
-            --surface-color: #ffffff;
-            --text-primary: #111111;
-            --text-secondary: #555555;
-            --accent-red: #e50914;
-            --border-color: #e2e8f0;
-            --radius-lg: 16px;
+            --bg-canvas: #fafafa;
+            --surface: #ffffff;
+            --text-primary: #09090b;
+            --text-secondary: #71717a;
+            --accent: #e50914;
+            --border: #e4e4e7;
+            --radius-card: 16px;
             --radius-sm: 10px;
         }
 
@@ -23,389 +23,402 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-canvas);
             color: var(--text-primary);
             line-height: 1.5;
-            padding: 24px 16px;
+            padding: 40px 16px;
             display: flex;
             justify-content: center;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .page-wrapper {
+        .studio-shell {
             width: 100%;
-            max-width: 1100px;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        /* Hero / Cover Section ala cover.jpg */
-        .hero-cover {
-            background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 32px 28px;
+            max-width: 960px;
             display: flex;
             flex-direction: column;
             gap: 28px;
+        }
+
+        /* --- ELEGAN HERO COVER (ALA ELEVENLABS / EDITORIAL) --- */
+        .editorial-cover {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 40px 48px;
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 10.5px 21px rgba(0,0,0,0.015);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
         }
 
-        .meta-top {
+        .editorial-topbar {
             display: flex;
-            justify-content: flex-start;
-            gap: 48px;
-        }
-
-        .meta-column span.label {
-            display: block;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--accent-red);
-            letter-spacing: 1.2px;
-            margin-bottom: 2px;
-            text-transform: uppercase;
-        }
-
-        .meta-column span.val {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .hero-content {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .hero-title-group h1 {
-            font-size.clamp;
-            font-size: clamp(2.2rem, 5vw, 3.8rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.05;
-            color: var(--text-primary);
-        }
-
-        .hero-title-group h1 span {
-            color: var(--text-primary);
-        }
-
-        .hero-subtitle {
-            font-size: clamp(0.95rem, 2vw, 1.15rem);
-            color: var(--text-secondary);
-            font-weight: 400;
-            max-width: 50ch;
-        }
-
-        .hero-visual-container {
-            display: flex;
-            justify-content: flex-end;
             align-items: center;
-            padding: 10px 0;
+            justify-content: space-between;
         }
 
-        .megaphone-graphic {
-            width: 180px;
-            height: auto;
-            max-width: 100%;
+        .logo-brand {
+            height: 28px;
+            width: auto;
             display: block;
         }
 
-        .meta-bottom {
-            border-top: 1px solid var(--border-color);
-            padding-top: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .meta-bottom span.label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--accent-red);
-            letter-spacing: 1.2px;
+        .year-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
             text-transform: uppercase;
         }
 
-        .meta-bottom span.val {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        /* Studio Panel Card */
-        .studio-card {
-            background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 28px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        .editorial-main {
             display: flex;
             flex-direction: column;
             gap: 24px;
         }
 
-        .studio-header h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+        @media (min-width: 768px) {
+            .editorial-main {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
         }
 
-        .studio-header p {
+        .editorial-headline {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 520px;
+        }
+
+        .editorial-headline h1 {
+            font-size: clamp(2.25rem, 4vw, 3.25rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            color: var(--text-primary);
+        }
+
+        .editorial-headline p {
+            font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .editorial-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .megaphone-img {
+            width: 150px;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 12px 24px rgba(0,0,0,0.08));
+        }
+
+        @media (min-width: 768px) {
+            .megaphone-img {
+                width: 190px;
+            }
+        }
+
+        .editorial-footer {
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 24px;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .editorial-footer strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* --- STUDIO WORKSPACE CARD --- */
+        .workspace-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 40px 48px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 10.5px 21px rgba(0,0,0,0.015);
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .workspace-title h2 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .workspace-title p {
             font-size: 0.85rem;
             color: var(--text-secondary);
         }
 
-        .form-grid {
+        .control-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 24px;
         }
 
         @media (min-width: 768px) {
-            .hero-cover {
-                padding: 48px;
-                display: grid;
-                grid-template-columns: 1.4fr 1fr;
-                grid-template-rows: auto auto auto;
-                gap: 24px;
+            .control-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .meta-top { grid-column: 1 / 3; grid-row: 1; }
-            .hero-content { grid-column: 1 / 2; grid-row: 2; justify-content: center; }
-            .hero-visual-container { grid-column: 2 / 3; grid-row: 2; justify-content: center; }
-            .meta-bottom { grid-column: 1 / 3; grid-row: 3; }
-            .megaphone-graphic { width: 220px; }
-            .form-grid { grid-template-columns: 1fr 1fr; }
-            .form-group.full-width { grid-column: 1 / -1; }
+            .span-full {
+                grid-column: 1 / -1;
+            }
         }
 
-        .form-group {
+        .field-group {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
 
-        .form-group label {
+        .field-group label {
             font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            color: var(--text-primary);
+            color: var(--text-secondary);
         }
 
-        .character-row {
+        .select-row {
             display: flex;
             gap: 10px;
         }
 
-        .character-row select {
+        .select-row select {
             flex: 1;
         }
 
-        select, textarea, input[type="range"], input[type="text"] {
+        select, input[type="text"], textarea {
             width: 100%;
             padding: 12px 14px;
-            border: 1px solid var(--border-color);
+            background: #fafafa;
+            border: 1px solid var(--border);
             border-radius: var(--radius-sm);
             font-size: 0.95rem;
-            background: #fff;
             color: var(--text-primary);
-            transition: border-color 0.15s ease;
+            transition: all 0.2s ease;
         }
 
-        select:focus, textarea:focus, input[type="text"]:focus {
+        select:focus, input[type="text"]:focus, textarea:focus {
             outline: none;
+            background: #fff;
             border-color: var(--text-primary);
+            box-shadow: 0 0 0 3px rgba(9,9,11,0.05);
         }
 
         textarea {
             resize: vertical;
-            height: 110px;
+            height: 120px;
+            line-height: 1.6;
         }
 
-        .preview-btn {
-            background-color: var(--accent-red);
-            color: white;
+        .btn-preview {
+            background: var(--text-primary);
+            color: #fff;
             border: none;
             padding: 0 16px;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 500;
             border-radius: var(--radius-sm);
             cursor: pointer;
+            transition: opacity 0.2s;
             white-space: nowrap;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
         }
 
-        .preview-btn:hover {
-            background-color: #c40711;
+        .btn-preview:hover {
+            opacity: 0.85;
         }
 
-        .slider-wrapper {
+        .slider-box {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
+            padding: 8px 0;
         }
 
-        .slider-wrapper input[type="range"] {
-            cursor: pointer;
+        .slider-box input[type="range"] {
+            flex: 1;
             accent-color: var(--text-primary);
+            cursor: pointer;
         }
 
-        .slider-val {
-            min-width: 48px;
+        .slider-readout {
+            min-width: 52px;
             text-align: right;
-            font-size: 0.85rem;
             font-variant-numeric: tabular-nums;
-            font-weight: 600;
+            font-size: 0.85rem;
+            font-weight: 500;
             color: var(--text-secondary);
         }
 
-        .action-container {
+        /* --- ACTION & OUTPUT SECTION --- */
+        .workspace-action {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            margin-top: 8px;
+            gap: 20px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
         }
 
-        button.primary-btn {
-            background-color: var(--text-primary);
-            color: white;
+        .btn-generate {
+            width: 100%;
+            background: var(--accent);
+            color: #fff;
             border: none;
             padding: 16px;
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 0.95rem;
+            font-weight: 600;
             border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s, transform 0.05s;
         }
 
-        button.primary-btn:hover {
-            background-color: #262626;
+        .btn-generate:hover {
+            background: #cc0811;
         }
 
-        button.primary-btn:disabled {
-            background-color: #cbd5e1;
+        .btn-generate:active {
+            transform: scale(0.99);
+        }
+
+        .btn-generate:disabled {
+            background: #a1a1aa;
             cursor: not-allowed;
         }
 
-        .result-box {
-            display: flex;
+        .output-card {
+            background: #fafafa;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            display: none;
             flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            padding-top: 12px;
-            border-top: 1px dashed var(--border-color);
+            gap: 14px;
         }
 
-        .result-box h3 {
+        .output-card.active {
+            display: flex;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .output-header span {
             font-size: 0.75rem;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
+            font-weight: 600;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            color: #059669;
+            font-weight: 600;
         }
 
         audio {
             width: 100%;
-            height: 40px;
+            height: 38px;
         }
 
-        .download-btn {
+        .btn-download-direct {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            background-color: #059669;
-            color: white;
+            background: var(--text-primary);
+            color: #fff;
             text-decoration: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: var(--radius-sm);
+            font-size: 0.85rem;
             font-weight: 600;
-            font-size: 0.85rem;
-            transition: background-color 0.2s;
+            transition: opacity 0.2s;
+            width: fit-content;
         }
 
-        .download-btn:hover {
-            background-color: #047857;
+        .btn-download-direct:hover {
+            opacity: 0.85;
         }
 
-        .status-text {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+        /* Responsive Mobile Tweak */
+        @media (max-width: 640px) {
+            body {
+                padding: 16px 12px;
+            }
+            .editorial-cover, .workspace-panel {
+                padding: 24px 20px;
+            }
+            .editorial-headline h1 {
+                font-size: 1.85rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="page-wrapper">
-        <!-- COVER / HERO SECTION (Sesuai referensi visual) -->
-        <header class="hero-cover">
-            <div class="meta-top">
-                <div class="meta-column">
-                    <span class="label">YEAR</span>
-                    <span class="val">2026</span>
+    <div class="studio-shell">
+        <!-- COVER / HERO SECTION (Mewah & Minimalis ala ElevenLabs) -->
+        <header class="editorial-cover">
+            <div class="editorial-topbar">
+                <!-- Ganti path src ke nama file png logo Materimedia dot titik merahmu -->
+                <img src="media-logo.png" alt="materimedia." class="logo-brand" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <span class="logo-fallback" style="display:none; font-weight:700; font-size:1.1rem; letter-spacing:-0.03em;">materimedia<span style="color:#e50914;">.</span></span>
+                <span class="year-badge">2026 // STUDIO</span>
+            </div>
+
+            <div class="editorial-main">
+                <div class="editorial-headline">
+                    <h1>Voice Over<br>materimedia<span style="color:#e50914;">.</span></h1>
+                    <p>Ubah Teks Menjadi Suara Berkualitas Studio dalam Hitungan Detik</p>
                 </div>
-                <div class="meta-column">
-                    <span class="label">PRESENTER</span>
-                    <span class="val">materimedia.</span>
+
+                <div class="editorial-visual">
+                    <!-- Ganti path src ke nama file png megaphone-mu -->
+                    <img src="megaphone-asset.png" alt="Megaphone" class="megaphone-img" onerror="this.style.display='none';">
                 </div>
             </div>
 
-            <div class="hero-content">
-                <div class="hero-title-group">
-                    <h1>Voice Over<br>materimedia.</h1>
-                </div>
-                <p class="hero-subtitle">Ubah Teks Menjadi Suara Berkualitas Studio dalam Hitungan Detik</p>
-            </div>
-
-            <div class="hero-visual-container">
-                <!-- SVG Megaphone dot-matrix artistik mirip referensi cover -->
-                <svg class="megaphone-graphic" viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <pattern id="dots" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
-                            <circle cx="2" cy="2" r="1.3" fill="#111111" />
-                        </pattern>
-                    </defs>
-                    <!-- Sound waves merah -->
-                    <path d="M195 55 Q215 90 195 125" stroke="#e50914" stroke-width="6" stroke-linecap="round" fill="none"/>
-                    <path d="M210 40 Q235 90 210 140" stroke="#e50914" stroke-width="6" stroke-linecap="round" fill="none"/>
-                    <path d="M225 25 Q255 90 225 155" stroke="#e50914" stroke-width="6" stroke-linecap="round" fill="none"/>
-                    <!-- Aksen kilat merah -->
-                    <polygon points="180,25 210,15 190,55" fill="#e50914"/>
-                    <polygon points="190,135 220,155 185,130" fill="#e50914"/>
-                    <!-- Badan Megaphone Dot Matrix -->
-                    <path d="M90 60 L170 35 L170 145 L90 120 Z" fill="url(#dots)" stroke="#111111" stroke-width="3" stroke-linejoin="round"/>
-                    <ellipse cx="170" cy="90" rx="14" ry="55" fill="url(#dots)" stroke="#111111" stroke-width="3"/>
-                    <path d="M50 100 L90 85 L90 135 L50 145 Z" fill="url(#dots)" stroke="#111111" stroke-width="3" stroke-linejoin="round"/>
-                    <rect x="75" y="115" width="25" height="30" rx="6" fill="#111111"/>
-                    <!-- Garis kontur merah elegan -->
-                    <path d="M115 52 L170 38" stroke="#e50914" stroke-width="2.5" fill="none"/>
-                    <path d="M85 85 L170 138" stroke="#e50914" stroke-width="2.5" fill="none"/>
-                    <path d="M70 102 L90 98" stroke="#e50914" stroke-width="2.5" fill="none"/>
-                </svg>
-            </div>
-
-            <div class="meta-bottom">
-                <span class="label">PROJECT</span>
-                <span class="val">Voice Over by Materi Media</span>
+            <div class="editorial-footer">
+                <div><span>PROJECT:</span> <strong>Voice Over by Materi Media</strong></div>
+                <div><span>ENGINE:</span> <strong>Neural HD</strong></div>
             </div>
         </header>
 
-        <!-- STUDIO CONTROLS PANEL -->
-        <main class="studio-card">
-            <div class="studio-header">
+        <!-- STUDIO CONTROLS -->
+        <main class="workspace-panel">
+            <div class="workspace-title">
                 <h2>Buat Suaramu Disini</h2>
                 <p>Sampaikan Pesan Lebih Jelas, Lebih Persuasif, dan Berkelas</p>
             </div>
 
-            <div class="form-grid">
-                <div class="form-group full-width">
+            <div class="control-grid">
+                <div class="field-group span-full">
                     <label for="characterSelect">Karakter Suara</label>
-                    <div class="character-row">
+                    <div class="select-row">
                         <select id="characterSelect">
                             <option value="Nain">Nain (Pria - Wibawa & Berwibawa)</option>
                             <option value="Dzul">Dzul (Pria - Tegas)</option>
@@ -418,11 +431,11 @@
                             <option value="Putri">Putri (Wanita - Informatif)</option>
                             <option value="Naina">Naina (Wanita - Soft)</option>
                         </select>
-                        <button type="button" class="preview-btn" onclick="previewCharacter()">Pratinjau</button>
+                        <button type="button" class="btn-preview" onclick="previewCharacter()">Pratinjau</button>
                     </div>
                 </div>
 
-                <div class="form-group full-width">
+                <div class="field-group span-full">
                     <label for="emotionSelect">Gaya Bicara & Emosi</label>
                     <select id="emotionSelect">
                         <option value="Profesional">Profesional</option>
@@ -438,50 +451,52 @@
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="field-group">
                     <label>Kecepatan Bicara (%)</label>
-                    <div class="slider-wrapper">
+                    <div class="slider-box">
                         <input type="range" id="speedSlider" min="-50" max="50" value="0">
-                        <span class="slider-val" id="speedVal">0%</span>
+                        <span class="slider-readout" id="speedVal">0%</span>
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="field-group">
                     <label>Nada Vokal (Hz)</label>
-                    <div class="slider-wrapper">
+                    <div class="slider-box">
                         <input type="range" id="pitchSlider" min="-30" max="30" value="0">
-                        <span class="slider-val" id="pitchVal">0 Hz</span>
+                        <span class="slider-readout" id="pitchVal">0 Hz</span>
                     </div>
                 </div>
 
-                <div class="form-group full-width">
+                <div class="field-group span-full">
                     <label>Keras Suara (%)</label>
-                    <div class="slider-wrapper">
+                    <div class="slider-box">
                         <input type="range" id="volumeSlider" min="-30" max="30" value="0">
-                        <span class="slider-val" id="volumeVal">0%</span>
+                        <span class="slider-readout" id="volumeVal">0%</span>
                     </div>
                 </div>
 
-                <div class="form-group full-width">
+                <div class="field-group span-full">
                     <label for="textInput">Teks untuk Diucapkan</label>
                     <textarea id="textInput" placeholder="Halo semuanya yg ada disini apa kabar?"></textarea>
                 </div>
 
-                <div class="form-group full-width">
+                <div class="field-group span-full">
                     <label for="apiKeyInput">Gemini API Key (Opsional)</label>
                     <input type="text" id="apiKeyInput" placeholder="Kosongkan jika menggunakan env server">
                 </div>
             </div>
 
-            <div class="action-container">
-                <button id="generateBtn" class="primary-btn" onclick="generateVoice()">Generasikan Voice Over</button>
+            <div class="workspace-action">
+                <button id="generateBtn" class="btn-generate" onclick="generateVoice()">Generasikan Voice Over</button>
 
-                <div class="result-box">
-                    <h3>Hasil Voice Over Studio</h3>
-                    <div id="statusMsg" class="status-text">Siap generate...</div>
-                    <audio id="audioPlayer" controls style="display:none;"></audio>
-                    <a id="downloadBtn" class="download-btn" style="display:none;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <div id="outputCard" class="output-card">
+                    <div class="output-header">
+                        <span>Hasil Voice Over Studio</span>
+                        <span id="statusBadge" class="status-badge">Siap</span>
+                    </div>
+                    <audio id="audioPlayer" controls></audio>
+                    <a id="downloadBtn" class="btn-download-direct">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                         Download File
                     </a>
                 </div>
@@ -489,7 +504,7 @@
         </main>
     </div>
 
-    <!-- Hidden audio element for character preview -->
+    <!-- Hidden audio element for preview -->
     <audio id="previewAudioPlayer" style="display:none;"></audio>
 
     <script>
@@ -535,7 +550,8 @@
 
         async function generateVoice() {
             const btn = document.getElementById('generateBtn');
-            const statusMsg = document.getElementById('statusMsg');
+            const outputCard = document.getElementById('outputCard');
+            const statusBadge = document.getElementById('statusBadge');
             const audioPlayer = document.getElementById('audioPlayer');
             const downloadBtn = document.getElementById('downloadBtn');
 
@@ -550,9 +566,7 @@
 
             btn.disabled = true;
             btn.textContent = 'Memproses...';
-            statusMsg.textContent = 'Menghubungkan ke server voice over...';
-            audioPlayer.style.display = 'none';
-            downloadBtn.style.display = 'none';
+            outputCard.classList.remove('active');
 
             try {
                 const payload = {
@@ -577,21 +591,20 @@
                 const audioUrl = URL.createObjectURL(blob);
                 
                 audioPlayer.src = audioUrl;
-                audioPlayer.style.display = 'block';
+                outputCard.classList.add('active');
                 audioPlayer.play();
 
                 downloadBtn.href = audioUrl;
                 downloadBtn.download = customFileName;
                 downloadBtn.innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                     Download ${customFileName}
                 `;
-                downloadBtn.style.display = 'inline-flex';
 
-                statusMsg.textContent = 'Selesai! Audio siap diputar atau diunduh.';
+                statusBadge.textContent = 'Selesai';
             } catch (err) {
                 console.error(err);
-                statusMsg.textContent = 'Error: Gagal generate audio.';
+                alert('Gagal generate audio.');
             } finally {
                 btn.disabled = false;
                 btn.textContent = 'Generasikan Voice Over';
