@@ -6,260 +6,504 @@
     <title>Voice Over materimedia.</title>
     <style>
         :root {
-            --bg-color: #ffffff;
-            --text-color: #111111;
-            --accent-color: #e50914;
-            --card-bg: #f9f9f9;
-            --border-color: #e0e0e0;
+            --bg-color: #f4f4f5;
+            --surface-color: #ffffff;
+            --text-primary: #111111;
+            --text-secondary: #555555;
+            --accent-red: #e50914;
+            --border-color: #e2e8f0;
+            --radius-lg: 16px;
+            --radius-sm: 10px;
         }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
+            color: var(--text-primary);
+            line-height: 1.5;
+            padding: 24px 16px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .page-wrapper {
+            width: 100%;
+            max-width: 1100px;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            gap: 40px;
         }
-        .container {
-            width: 100%;
-            max-width: 600px;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .header h1 {
-            font-size: 2.5rem;
-            margin: 10px 0;
-            letter-spacing: -1px;
-        }
-        .subtag {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #666;
-        }
-        .card {
-            background: var(--card-bg);
+
+        /* Hero / Cover Section ala cover.jpg */
+        .hero-cover {
+            background-color: var(--surface-color);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 20px;
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
         }
-        .form-group {
-            margin-bottom: 20px;
+
+        .meta-top {
+            display: flex;
+            justify-content: flex-start;
+            gap: 48px;
         }
-        .form-group label {
+
+        .meta-column span.label {
             display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent-red);
+            letter-spacing: 1.2px;
+            margin-bottom: 2px;
+            text-transform: uppercase;
         }
+
+        .meta-column span.val {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .hero-title-group h1 {
+            font-size.clamp;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            color: var(--text-primary);
+        }
+
+        .hero-title-group h1 span {
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 50ch;
+        }
+
+        .hero-visual-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .megaphone-graphic {
+            width: 180px;
+            height: auto;
+            max-width: 100%;
+            display: block;
+        }
+
+        .meta-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .meta-bottom span.label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent-red);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .meta-bottom span.val {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Studio Panel Card */
+        .studio-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .studio-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .studio-header p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .hero-cover {
+                padding: 48px;
+                display: grid;
+                grid-template-columns: 1.4fr 1fr;
+                grid-template-rows: auto auto auto;
+                gap: 24px;
+            }
+            .meta-top { grid-column: 1 / 3; grid-row: 1; }
+            .hero-content { grid-column: 1 / 2; grid-row: 2; justify-content: center; }
+            .hero-visual-container { grid-column: 2 / 3; grid-row: 2; justify-content: center; }
+            .meta-bottom { grid-column: 1 / 3; grid-row: 3; }
+            .megaphone-graphic { width: 220px; }
+            .form-grid { grid-template-columns: 1fr 1fr; }
+            .form-group.full-width { grid-column: 1 / -1; }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
         .character-row {
             display: flex;
             gap: 10px;
-            align-items: center;
         }
+
         .character-row select {
             flex: 1;
         }
-        .preview-btn {
-            background-color: #e50914;
-            color: white;
-            border: none;
-            padding: 12px 16px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            width: auto;
-            white-space: nowrap;
-        }
-        .preview-btn:hover {
-            background-color: #b80710;
-        }
+
         select, textarea, input[type="range"], input[type="text"] {
             width: 100%;
-            padding: 12px;
+            padding: 12px 14px;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            box-sizing: border-box;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
             background: #fff;
+            color: var(--text-primary);
+            transition: border-color 0.15s ease;
         }
+
+        select:focus, textarea:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: var(--text-primary);
+        }
+
         textarea {
             resize: vertical;
-            height: 120px;
+            height: 110px;
         }
-        .slider-container {
+
+        .preview-btn {
+            background-color: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 0 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .preview-btn:hover {
+            background-color: #c40711;
+        }
+
+        .slider-wrapper {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 14px;
         }
-        .slider-value {
-            min-width: 45px;
+
+        .slider-wrapper input[type="range"] {
+            cursor: pointer;
+            accent-color: var(--text-primary);
+        }
+
+        .slider-val {
+            min-width: 48px;
             text-align: right;
+            font-size: 0.85rem;
             font-variant-numeric: tabular-nums;
+            font-weight: 600;
+            color: var(--text-secondary);
         }
-        button.action-btn {
-            width: 100%;
-            background-color: var(--text-color);
+
+        .action-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        button.primary-btn {
+            background-color: var(--text-primary);
             color: white;
             border: none;
             padding: 16px;
             font-size: 1rem;
-            font-weight: 600;
-            border-radius: 8px;
+            font-weight: 700;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        button.action-btn:hover {
-            background-color: #333;
+
+        button.primary-btn:hover {
+            background-color: #262626;
         }
-        button.action-btn:disabled {
-            background-color: #ccc;
+
+        button.primary-btn:disabled {
+            background-color: #cbd5e1;
             cursor: not-allowed;
         }
-        .audio-result {
-            margin-top: 20px;
-            text-align: center;
+
+        .result-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-color);
         }
+
+        .result-box h3 {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
         audio {
             width: 100%;
-            margin-top: 10px;
+            height: 40px;
         }
-        .download-direct-btn {
-            display: inline-block;
-            margin-top: 15px;
-            background-color: #10b981;
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #059669;
             color: white;
             text-decoration: none;
-            padding: 12px 24px;
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
             font-weight: 600;
-            border-radius: 8px;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            transition: background-color 0.2s;
         }
-        .download-direct-btn:hover {
-            background-color: #059669;
+
+        .download-btn:hover {
+            background-color: #047857;
         }
-        .status-msg {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #666;
+
+        .status-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header">
-            <div class="subtag">Presenter Materimedia.</div>
-            <h1>Voice Over materimedia.</h1>
-            <p style="color: #555;">Ubah Teks Menjadi Suara Berkualitas Studio dalam Hitungan Detik</p>
-        </div>
+    <div class="page-wrapper">
+        <!-- COVER / HERO SECTION (Sesuai referensi visual) -->
+        <header class="hero-cover">
+            <div class="meta-top">
+                <div class="meta-column">
+                    <span class="label">YEAR</span>
+                    <span class="val">2026</span>
+                </div>
+                <div class="meta-column">
+                    <span class="label">PRESENTER</span>
+                    <span class="val">materimedia.</span>
+                </div>
+            </div>
 
-        <div class="card">
-            <h2 style="margin-top:0;">Buat Suaramu Disini</h2>
-            <p style="font-size:0.85rem; color:#666; margin-bottom:20px;">Sampaikan Pesan Lebih Jelas, Lebih Persuasif, dan Berkelas</p>
+            <div class="hero-content">
+                <div class="hero-title-group">
+                    <h1>Voice Over<br>materimedia.</h1>
+                </div>
+                <p class="hero-subtitle">Ubah Teks Menjadi Suara Berkualitas Studio dalam Hitungan Detik</p>
+            </div>
 
-            <div class="form-group">
-                <label for="characterSelect">Karakter Suara</label>
-                <div class="character-row">
-                    <select id="characterSelect">
-                        <option value="Nain">Nain (Pria - Wibawa & Berwibawa)</option>
-                        <option value="Dzul">Dzul (Pria - Tegas)</option>
-                        <option value="Rayyan">Rayyan (Pria - Energik)</option>
-                        <option value="Amar">Amar (Pria - Berat/Deep)</option>
-                        <option value="Ramy">Ramy (Pria - Natural)</option>
-                        <option value="Mawar">Mawar (Wanita - Profesional)</option>
-                        <option value="Khilwa">Khilwa (Wanita - Ceria/High)</option>
-                        <option value="Tsurayya">Tsurayya (Wanita - Tenang)</option>
-                        <option value="Putri">Putri (Wanita - Informatif)</option>
-                        <option value="Naina">Naina (Wanita - Soft)</option>
+            <div class="hero-visual-container">
+                <!-- SVG Megaphone dot-matrix artistik mirip referensi cover -->
+                <svg class="megaphone-graphic" viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="dots" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+                            <circle cx="2" cy="2" r="1.3" fill="#111111" />
+                        </pattern>
+                    </defs>
+                    <!-- Sound waves merah -->
+                    <path d="M195 55 Q215 90 195 125" stroke="#e50914" stroke-width="6" stroke-linecap="round" fill="none"/>
+                    <path d="M210 40 Q235 90 210 140" stroke="#e50914" stroke-width="6" stroke-linecap="round" fill="none"/>
+                    <path d="M225 25 Q255 90 225 155" stroke="#e50914" stroke-width="6" stroke-linecap="round" fill="none"/>
+                    <!-- Aksen kilat merah -->
+                    <polygon points="180,25 210,15 190,55" fill="#e50914"/>
+                    <polygon points="190,135 220,155 185,130" fill="#e50914"/>
+                    <!-- Badan Megaphone Dot Matrix -->
+                    <path d="M90 60 L170 35 L170 145 L90 120 Z" fill="url(#dots)" stroke="#111111" stroke-width="3" stroke-linejoin="round"/>
+                    <ellipse cx="170" cy="90" rx="14" ry="55" fill="url(#dots)" stroke="#111111" stroke-width="3"/>
+                    <path d="M50 100 L90 85 L90 135 L50 145 Z" fill="url(#dots)" stroke="#111111" stroke-width="3" stroke-linejoin="round"/>
+                    <rect x="75" y="115" width="25" height="30" rx="6" fill="#111111"/>
+                    <!-- Garis kontur merah elegan -->
+                    <path d="M115 52 L170 38" stroke="#e50914" stroke-width="2.5" fill="none"/>
+                    <path d="M85 85 L170 138" stroke="#e50914" stroke-width="2.5" fill="none"/>
+                    <path d="M70 102 L90 98" stroke="#e50914" stroke-width="2.5" fill="none"/>
+                </svg>
+            </div>
+
+            <div class="meta-bottom">
+                <span class="label">PROJECT</span>
+                <span class="val">Voice Over by Materi Media</span>
+            </div>
+        </header>
+
+        <!-- STUDIO CONTROLS PANEL -->
+        <main class="studio-card">
+            <div class="studio-header">
+                <h2>Buat Suaramu Disini</h2>
+                <p>Sampaikan Pesan Lebih Jelas, Lebih Persuasif, dan Berkelas</p>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="characterSelect">Karakter Suara</label>
+                    <div class="character-row">
+                        <select id="characterSelect">
+                            <option value="Nain">Nain (Pria - Wibawa & Berwibawa)</option>
+                            <option value="Dzul">Dzul (Pria - Tegas)</option>
+                            <option value="Rayyan">Rayyan (Pria - Energik)</option>
+                            <option value="Amar">Amar (Pria - Berat/Deep)</option>
+                            <option value="Ramy">Ramy (Pria - Natural)</option>
+                            <option value="Mawar">Mawar (Wanita - Profesional)</option>
+                            <option value="Khilwa">Khilwa (Wanita - Ceria/High)</option>
+                            <option value="Tsurayya">Tsurayya (Wanita - Tenang)</option>
+                            <option value="Putri">Putri (Wanita - Informatif)</option>
+                            <option value="Naina">Naina (Wanita - Soft)</option>
+                        </select>
+                        <button type="button" class="preview-btn" onclick="previewCharacter()">Pratinjau</button>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="emotionSelect">Gaya Bicara & Emosi</label>
+                    <select id="emotionSelect">
+                        <option value="Profesional">Profesional</option>
+                        <option value="Bersemangat">Bersemangat</option>
+                        <option value="Ceria">Ceria</option>
+                        <option value="Sedih">Sedih</option>
+                        <option value="Marah">Marah</option>
+                        <option value="Informatif">Informatif</option>
+                        <option value="Berbisik">Berbisik</option>
+                        <option value="Tenang">Tenang</option>
+                        <option value="Dramatis">Dramatis</option>
+                        <option value="Santai">Santai</option>
                     </select>
-                    <button type="button" class="preview-btn" onclick="previewCharacter()">Pratinjau Suara</button>
+                </div>
+
+                <div class="form-group">
+                    <label>Kecepatan Bicara (%)</label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="speedSlider" min="-50" max="50" value="0">
+                        <span class="slider-val" id="speedVal">0%</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nada Vokal (Hz)</label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="pitchSlider" min="-30" max="30" value="0">
+                        <span class="slider-val" id="pitchVal">0 Hz</span>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Keras Suara (%)</label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="volumeSlider" min="-30" max="30" value="0">
+                        <span class="slider-val" id="volumeVal">0%</span>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="textInput">Teks untuk Diucapkan</label>
+                    <textarea id="textInput" placeholder="Halo semuanya yg ada disini apa kabar?"></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="apiKeyInput">Gemini API Key (Opsional)</label>
+                    <input type="text" id="apiKeyInput" placeholder="Kosongkan jika menggunakan env server">
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="emotionSelect">Gaya Bicara & Emosi</label>
-                <select id="emotionSelect">
-                    <option value="Profesional">Profesional</option>
-                    <option value="Bersemangat">Bersemangat</option>
-                    <option value="Ceria">Ceria</option>
-                    <option value="Sedih">Sedih</option>
-                    <option value="Marah">Marah</option>
-                    <option value="Informatif">Informatif</option>
-                    <option value="Berbisik">Berbisik</option>
-                    <option value="Tenang">Tenang</option>
-                    <option value="Dramatis">Dramatis</option>
-                    <option value="Santai">Santai</option>
-                </select>
-            </div>
+            <div class="action-container">
+                <button id="generateBtn" class="primary-btn" onclick="generateVoice()">Generasikan Voice Over</button>
 
-            <div class="form-group">
-                <label>KECEPATAN BICARA (%)</label>
-                <div class="slider-container">
-                    <input type="range" id="speedSlider" min="-50" max="50" value="0">
-                    <span class="slider-value" id="speedVal">0</span>
+                <div class="result-box">
+                    <h3>Hasil Voice Over Studio</h3>
+                    <div id="statusMsg" class="status-text">Siap generate...</div>
+                    <audio id="audioPlayer" controls style="display:none;"></audio>
+                    <a id="downloadBtn" class="download-btn" style="display:none;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download File
+                    </a>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label>NADA VOKAL (HZ)</label>
-                <div class="slider-container">
-                    <input type="range" id="pitchSlider" min="-30" max="30" value="0">
-                    <span class="slider-value" id="pitchVal">0</span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>KERAS SUARA (%)</label>
-                <div class="slider-container">
-                    <input type="range" id="volumeSlider" min="-30" max="30" value="0">
-                    <span class="slider-value" id="volumeVal">0</span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="textInput">TEKS UNTUK DIUCAPKAN:</label>
-                <textarea id="textInput" placeholder="Halo semuanya yg ada disini apa kabar?"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="apiKeyInput">Gemini API Key (Opsional):</label>
-                <input type="text" id="apiKeyInput" placeholder="Kosongkan jika pakai env server">
-            </div>
-
-            <button id="generateBtn" class="action-btn" onclick="generateVoice()">Generasikan Voice Over</button>
-
-            <div class="audio-result">
-                <h3>HASIL VOICE OVER STUDIO</h3>
-                <div id="statusMsg" class="status-msg">Siap generate...</div>
-                <audio id="audioPlayer" controls style="display:none;"></audio>
-                <div>
-                    <a id="downloadBtn" class="download-direct-btn" style="display:none;" download="audio.mp3">Download Hasil Voice Over</a>
-                </div>
-            </div>
-        </div>
+        </main>
     </div>
 
-    <!-- Hidden audio player for preview -->
+    <!-- Hidden audio element for character preview -->
     <audio id="previewAudioPlayer" style="display:none;"></audio>
 
     <script>
-        function setupSlider(sliderId, valId) {
+        function bindSlider(sliderId, valId, suffix) {
             const slider = document.getElementById(sliderId);
             const val = document.getElementById(valId);
             slider.addEventListener('input', () => {
-                val.textContent = (slider.value > 0 ? '+' : '') + slider.value;
+                const prefix = slider.value > 0 ? '+' : '';
+                val.textContent = `${prefix}${slider.value}${suffix}`;
             });
         }
-        setupSlider('speedSlider', 'speedVal');
-        setupSlider('pitchSlider', 'pitchVal');
-        setupSlider('volumeSlider', 'volumeVal');
+        bindSlider('speedSlider', 'speedVal', '%');
+        bindSlider('pitchSlider', 'pitchVal', ' Hz');
+        bindSlider('volumeSlider', 'volumeVal', '%');
 
         async function previewCharacter() {
             const charName = document.getElementById('characterSelect').value;
@@ -280,12 +524,12 @@
                         gemini_api_key: ''
                     })
                 });
-                if (!response.ok) throw new Error('Gagal pratinjau');
+                if (!response.ok) throw new Error('Preview gagal');
                 const blob = await response.blob();
                 previewPlayer.src = URL.createObjectURL(blob);
                 previewPlayer.play();
             } catch (err) {
-                alert('Gagal memutar pratinjau suara karakter.');
+                alert('Gagal memutar pratinjau suara.');
             }
         }
 
@@ -327,9 +571,7 @@
                     body: JSON.stringify(payload)
                 });
 
-                if (!response.ok) {
-                    throw new Error(`Server error: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
                 const blob = await response.blob();
                 const audioUrl = URL.createObjectURL(blob);
@@ -340,10 +582,13 @@
 
                 downloadBtn.href = audioUrl;
                 downloadBtn.download = customFileName;
-                downloadBtn.textContent = `Download ${customFileName}`;
-                downloadBtn.style.display = 'inline-block';
+                downloadBtn.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download ${customFileName}
+                `;
+                downloadBtn.style.display = 'inline-flex';
 
-                statusMsg.textContent = 'Selesai! Audio berhasil digenerate.';
+                statusMsg.textContent = 'Selesai! Audio siap diputar atau diunduh.';
             } catch (err) {
                 console.error(err);
                 statusMsg.textContent = 'Error: Gagal generate audio.';
