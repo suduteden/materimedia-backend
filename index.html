@@ -46,13 +46,12 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius-card);
-            padding: 40px 48px;
+            padding: 32px 28px;
             display: flex;
             flex-direction: column;
-            gap: 36px;
+            gap: 24px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 10.5px 21px rgba(0,0,0,0.015);
             position: relative;
-            overflow: hidden;
         }
 
         .editorial-topbar {
@@ -62,7 +61,7 @@
         }
 
         .logo-brand {
-            height: 28px;
+            height: 24px;
             width: auto;
             display: block;
         }
@@ -78,10 +77,13 @@
         .editorial-main {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
         }
 
         @media (min-width: 768px) {
+            .editorial-cover {
+                padding: 44px 48px;
+            }
             .editorial-main {
                 flex-direction: row;
                 align-items: center;
@@ -106,26 +108,28 @@
 
         .editorial-headline p {
             font-size: clamp(0.95rem, 1.5vw, 1.05rem);
-            color: var(--text-secondary);
-            font-weight: 400;
+            color: var(--accent);
+            font-weight: 500;
         }
 
         .editorial-visual {
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 140px;
         }
 
         .megaphone-img {
-            width: 150px;
+            width: 160px;
             height: auto;
             object-fit: contain;
+            display: block;
             filter: drop-shadow(0 12px 24px rgba(0,0,0,0.08));
         }
 
         @media (min-width: 768px) {
             .megaphone-img {
-                width: 190px;
+                width: 200px;
             }
         }
 
@@ -145,16 +149,26 @@
             font-weight: 600;
         }
 
+        .text-accent {
+            color: var(--accent);
+        }
+
         /* --- STUDIO WORKSPACE CARD --- */
         .workspace-panel {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius-card);
-            padding: 40px 48px;
+            padding: 32px 28px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 10.5px 21px rgba(0,0,0,0.015);
             display: flex;
             flex-direction: column;
-            gap: 32px;
+            gap: 28px;
+        }
+
+        @media (min-width: 768px) {
+            .workspace-panel {
+                padding: 40px 48px;
+            }
         }
 
         .workspace-title h2 {
@@ -165,8 +179,9 @@
         }
 
         .workspace-title p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 500;
         }
 
         .control-grid {
@@ -381,30 +396,27 @@
 <body>
 
     <div class="studio-shell">
-        <!-- COVER / HERO SECTION (Mewah & Minimalis ala ElevenLabs) -->
+        <!-- COVER / HERO SECTION -->
         <header class="editorial-cover">
             <div class="editorial-topbar">
-                <!-- Ganti path src ke nama file png logo Materimedia dot titik merahmu -->
                 <img src="media-logo.png" alt="materimedia." class="logo-brand" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                <span class="logo-fallback" style="display:none; font-weight:700; font-size:1.1rem; letter-spacing:-0.03em;">materimedia<span style="color:#e50914;">.</span></span>
+                <span class="logo-fallback" style="display:none; font-weight:700; font-size:1.1rem; letter-spacing:-0.03em;">materimedia<span class="text-accent">.</span></span>
                 <span class="year-badge">2026 // STUDIO</span>
             </div>
 
             <div class="editorial-main">
                 <div class="editorial-headline">
-                    <h1>Voice Over<br>materimedia<span style="color:#e50914;">.</span></h1>
-                    <p>Ubah Teks Menjadi Suara Berkualitas Studio dalam Hitungan Detik</p>
+                    <h1>Voice Over<br>materimedia<span class="text-accent">.</span></h1>
+                    <p>Ubah Teks Menjadi Suara Berkualitas <span class="text-accent">Studio</span> dalam Hitungan Detik</p>
                 </div>
 
                 <div class="editorial-visual">
-                    <!-- Ganti path src ke nama file png megaphone-mu -->
-                    <img src="megaphone-asset.png" alt="Megaphone" class="megaphone-img" onerror="this.style.display='none';">
+                    <img src="megaphone-asset.png" alt="Megaphone" class="megaphone-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1589903308904-1010c2294adc?auto=format&fit=crop&w=400&q=80';">
                 </div>
             </div>
 
             <div class="editorial-footer">
-                <div><span>PROJECT:</span> <strong>Voice Over by Materi Media</strong></div>
-                <div><span>ENGINE:</span> <strong>Neural HD</strong></div>
+                <div><span class="text-accent" style="font-weight:700;">PROJECT:</span> <strong>Voice Over by Materi Media</strong></div>
             </div>
         </header>
 
@@ -479,11 +491,6 @@
                     <label for="textInput">Teks untuk Diucapkan</label>
                     <textarea id="textInput" placeholder="Halo semuanya yg ada disini apa kabar?"></textarea>
                 </div>
-
-                <div class="field-group span-full">
-                    <label for="apiKeyInput">Gemini API Key (Opsional)</label>
-                    <input type="text" id="apiKeyInput" placeholder="Kosongkan jika menggunakan env server">
-                </div>
             </div>
 
             <div class="workspace-action">
@@ -491,7 +498,7 @@
 
                 <div id="outputCard" class="output-card">
                     <div class="output-header">
-                        <span>Hasil Voice Over Studio</span>
+                        <span>Hasil Voice Over <span class="text-accent">Studio</span></span>
                         <span id="statusBadge" class="status-badge">Siap</span>
                     </div>
                     <audio id="audioPlayer" controls></audio>
@@ -576,7 +583,7 @@
                     speed_mod: parseInt(document.getElementById('speedSlider').value),
                     pitch_mod: parseInt(document.getElementById('pitchSlider').value),
                     volume_mod: parseInt(document.getElementById('volumeSlider').value),
-                    gemini_api_key: document.getElementById('apiKeyInput').value.trim()
+                    gemini_api_key: ''
                 };
 
                 const response = await fetch('/api/generate', {
