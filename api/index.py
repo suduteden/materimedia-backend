@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import Response, HTMLResponse
 import asyncio
 import os
@@ -7,6 +7,11 @@ from google import genai
 import edge_tts
 
 app = FastAPI()
+
+# Kredensial client sesuai permintaan
+CLIENT_CREDENTIALS = {
+    "MateriVO": "MediaVO"
+}
 
 CHARACTERS = {
     "Nain": {"voice": "id-ID-ArdiNeural", "base_pitch": -16, "base_rate": -5},
@@ -49,6 +54,17 @@ async def serve_frontend():
         with open(html_path, "r", encoding="utf-8") as f:
             return f.read()
     return "<h1>index.html not found</h1>"
+
+@app.post("/api/login")
+async def login_client(request: Request):
+    body = await request.json()
+    username = body.get("username", "").strip()
+    password = body.get("password", "").strip()
+
+    if username in CLIENT_CREDENTIALS and CLIENT_CREDENTIALS[username] == password:
+        return {"status": "success", "message": "Login berhasil"}
+    
+    raise HTTPException(status_code=401, detail="ID atau Password salah!")
 
 @app.api_route("/api/generate", methods=["POST", "OPTIONS"])
 async def generate_audio(request: Request):
