@@ -36,7 +36,7 @@ EMOTIONS = {
 
 PHONETIC_DICTIONARY = {
     r'\bADS\b': 'Eds', r'\bAds\b': 'Eds', r'\bads\b': 'eds',
-    r'\bAI\b': 'Ei Ai', r'\bAi\b': 'Ei Ai', r'\bai\b': 'ei ai',
+    r'\bAI\b': 'A I', r'\bAi\b': 'A I', r'\bai\b': 'a i',
     r'\bWhatsApp\b': 'Watsap', r'\bWA\b': 'We A',
     r'\bZoom\b': 'Zum', r'\bMeta\b': 'Meta', r'\bPlus\b': 'Plas'
 }
