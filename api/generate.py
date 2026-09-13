@@ -1,10 +1,12 @@
-from http.server import BaseHTTPRequestHandler
-import json
+from fastapi import FastAPI, Request
+from fastapi.responses import Response
 import asyncio
 import os
 import re
 from google import genai
 import edge_tts
+
+app = FastAPI()
 
 CHARACTERS = {
     "Nain": {"voice": "id-ID-ArdiNeural", "base_pitch": -16, "base_rate": -5},
@@ -39,78 +41,72 @@ PHONETIC_DICTIONARY = {
     r'\bZoom\b': 'Zum', r'\bMeta\b': 'Meta', r'\bPlus\b': 'Plas'
 }
 
-class handler(BaseHTTPRequestHandler):
-    def do_POST(self):
-        content_length = int(self.headers.get('Content-Length', 0))
-        body_raw = self.rfile.read(content_length).decode('utf-8') if content_length > 0 else '{}'
+@app.post("/api/generate")
+@app.post("/")
+async def generate_audio(request: Request):
+    body = await request.json()
+    text = body.get('text', '')
+    character = body.get('character', 'Nain')
+    emotion = body.get('emotion', 'Profesional')
+    speed_mod = body.get('speed_mod', 0)
+    pitch_mod = body.get('pitch_mod', 0)
+    volume_mod = body.get('volume_mod', 0)
+    gemini_api_key = body.get('gemini_api_key', '')
+
+    char_info = CHARACTERS.get(character, CHARACTERS["Nain"])
+    emo_info = EMOTIONS.get(emotion, EMOTIONS["Profesional"])
+
+    naskah_final = text
+    active_key = gemini_api_key.strip() or os.environ.get("GEMINI_API_KEY", "")
+    if active_key and text:
         try:
-            body = json.loads(body_raw)
-        except Exception:
-            body = {}
-        
-        text = body.get('text', '')
-        character = body.get('character', 'Nain')
-        emotion = body.get('emotion', 'Profesional')
-        speed_mod = body.get('speed_mod', 0)
-        pitch_mod = body.get('pitch_mod', 0)
-        volume_mod = body.get('volume_mod', 0)
-        gemini_api_key = body.get('gemini_api_key', '')
-
-        char_info = CHARACTERS.get(character, CHARACTERS["Nain"])
-        emo_info = EMOTIONS.get(emotion, EMOTIONS["Profesional"])
-
-        naskah_final = text
-        active_key = gemini_api_key.strip() or os.environ.get("GEMINI_API_KEY", "")
-        if active_key and text:
-            try:
-                client = genai.Client(api_key=active_key)
-                resp = client.models.generate_content(
-                    model='gemini-2.5-flash',
-                    contents=f"Perbaiki naskah gaya {emotion} (tanpa SSML): {text}"
-                )
-                if resp and resp.text:
-                    naskah_final = re.sub(r'<[^>]+>', '', resp.text.strip())
-            except Exception:
-                pass
-
-        for pat, rep in PHONETIC_DICTIONARY.items():
-            naskah_final = re.sub(pat, rep, naskah_final)
-
-        tp = char_info["base_pitch"] + emo_info["pitch_mod"] + pitch_mod
-        tr = char_info["base_rate"] + emo_info["rate_mod"] + speed_mod
-        tv = int(emo_info["volume"].replace("%", "")) + volume_mod
-
-        out_file = "/tmp/output.mp3"
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        
-        async def _synth():
-            comm = edge_tts.Communicate(
-                naskah_final, 
-                char_info["voice"], 
-                rate=f"{tr:+d}%", 
-                pitch=f"{tp:+d}Hz", 
-                volume=f"{tv:+d}%"
+            client = genai.Client(api_key=active_key)
+            resp = client.models.generate_content(
+                model='gemini-2.5-flash',
+                contents=f"Perbaiki naskah gaya {emotion} (tanpa SSML): {text}"
             )
-            await comm.save(out_file)
-            
-        loop.run_until_complete(_synth())
-
-        try:
-            with open(out_file, 'rb') as f:
-                audio_bytes = f.read()
+            if resp and resp.text:
+                naskah_final = re.sub(r'<[^>]+>', '', resp.text.strip())
         except Exception:
-            audio_bytes = b''
+            pass
 
-        self.send_response(200)
-        self.send_header('Content-type', 'audio/mpeg')
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.end_headers()
-        self.wfile.write(audio_bytes)
+    for pat, rep in PHONETIC_DICTIONARY.items():
+        naskah_final = re.sub(pat, rep, naskah_final)
 
-    def do_OPTIONS(self):
-        self.send_response(200)
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
-        self.end_headers()
+    tp = char_info["base_pitch"] + emo_info["pitch_mod"] + pitch_mod
+    tr = char_info["base_rate"] + emo_info["rate_mod"] + speed_mod
+    tv = int(emo_info["volume"].replace("%", "")) + volume_mod
+
+    out_file = "/tmp/output.mp3"
+    comm = edge_tts.Communicate(
+        naskah_final, 
+        char_info["voice"], 
+        rate=f"{tr:+d}%", 
+        pitch=f"{tp:+d}Hz", 
+        volume=f"{tv:+d}%"
+    )
+    await comm.save(out_file)
+
+    try:
+        with open(out_file, 'rb') as f:
+            audio_bytes = f.read()
+    except Exception:
+        audio_bytes = b''
+
+    return Response(
+        content=audio_bytes,
+        media_type="audio/mpeg",
+        headers={"Access-Control-Allow-Origin": "*"}
+    )
+
+@app.options("/api/generate")
+@app.options("/")
+async def options_handler():
+    return Response(
+        content="",
+        headers={
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type"
+        }
+    )
