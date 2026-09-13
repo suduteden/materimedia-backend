@@ -41,12 +41,28 @@ PHONETIC_DICTIONARY = {
     r'\bZoom\b': 'Zum', r'\bMeta\b': 'Meta', r'\bPlus\b': 'Plas'
 }
 
-@app.post("/api/generate")
-@app.post("/api/index")
-@app.post("/")
+@app.api_route("/api/generate", methods=["GET", "POST", "OPTIONS"])
+@app.api_route("/api/index", methods=["GET", "POST", "OPTIONS"])
+@app.api_route("/", methods=["GET", "POST", "OPTIONS"])
 async def generate_audio(request: Request):
-    body = await request.json()
-    text = body.get('text', '')
+    if request.method == "OPTIONS":
+        return Response(
+            content="",
+            headers={
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type"
+            }
+        )
+    
+    body = {}
+    if request.method == "POST":
+        try:
+            body = await request.json()
+        except Exception:
+            body = {}
+            
+    text = body.get('text', 'Halo, tes audio Materimedia.')
     character = body.get('character', 'Nain')
     emotion = body.get('emotion', 'Profesional')
     speed_mod = body.get('speed_mod', 0)
@@ -98,17 +114,4 @@ async def generate_audio(request: Request):
         content=audio_bytes,
         media_type="audio/mpeg",
         headers={"Access-Control-Allow-Origin": "*"}
-    )
-
-@app.options("/api/generate")
-@app.options("/api/index")
-@app.options("/")
-async def options_handler():
-    return Response(
-        content="",
-        headers={
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type"
-        }
     )
